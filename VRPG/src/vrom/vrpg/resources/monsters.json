@@ -1,0 +1,41 @@
+{
+  "level1": [
+    {
+      "name": "ant",
+      "attack": "1",
+      "drop": [],
+      "exp": "1",
+      "lp": 1,
+      "status": "aggressive"
+    },
+    {
+      "name": "arachnea giganta",
+      "attack": "1",
+      "drop": [
+        "gold",
+        1
+      ],
+      "exp": "1",
+      "lp": 2,
+      "status": "aggressive"
+    },
+    {
+      "name": "luciole",
+      "attack": "0",
+      "drop": [
+      ],
+      "exp": "1",
+      "lp": 1,
+      "status": "passive"
+    },
+    {
+      "name": "luciole giganta",
+      "attack": "1",
+      "drop": [
+      ],
+      "exp": "1",
+      "lp": 1,
+      "status": "neutral"
+    }
+  ]
+}

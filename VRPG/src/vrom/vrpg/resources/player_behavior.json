@@ -1,0 +1,18 @@
+{
+  "level1": [
+    "<player_name> bites <monster_name>!",
+    "<player_name> hits with his big feet <monster_name>!"
+  ],
+  "level2": [
+    "<player_name> uses his hands to defeat <monster_name>!",
+    "<player_name> uses a small stem to defeat <monster_name>!"
+  ],
+  "monster_death": [
+    "<player_name> bites <monster_name>!",
+    "<player_name> hits with his big feet <monster_name>!"
+  ],
+  "player_death": [
+    "<player_name> uses his hands to defeat <monster_name>!",
+    "<player_name> uses a small stem to defeat <monster_name>!"
+  ]
+}

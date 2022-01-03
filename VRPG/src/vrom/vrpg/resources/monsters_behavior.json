@@ -1,0 +1,14 @@
+{
+  "aggressive": [
+    "Suddenly, the hidden <monster_name> get out the shadows and attacks <player_name>",
+    "Without hesitation, <monster_name> jumps into a fight with <player_name>"
+  ],
+  "neutral": [
+    "<monster_name> watchs <player_name> attentively without a move",
+    "<monster_name> stands, waiting for <player_name> actions"
+  ],
+  "passive": [
+    "<monster_name> watchs <player_name> attentively then moves a bit further",
+    "<monster_name> returns to the shadows. <player_name> sees its brighty eyes a moment then they fade"
+  ]
+}
