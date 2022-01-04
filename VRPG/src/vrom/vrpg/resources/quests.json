@@ -1,0 +1,22 @@
+{
+  "level1": [
+    {
+      "name": "main",
+      "numero": 1,
+      "level": 1,
+      "description": "Get yourself clean. Buy some soap, get a bath, you stinky groom!",
+      "required_quest_items": [{"gold": 4}, {"soap":  "1"}],
+      "reward_items": [{}]
+    }
+  ],
+  "level2": [
+    {
+      "name": "main",
+      "numero": 2,
+      "level": 1,
+      "description": "You need a true weapon!",
+      "required_quest_items": [{"gold": 5}],
+      "reward_items": [{}]
+    }
+  ]
+}

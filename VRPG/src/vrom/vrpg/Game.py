@@ -19,18 +19,21 @@
 
 import sys
 
+from src.vrom.vrpg.Display import Display
+display = Display.display
 
 class Game:
     def __init__(self, player):
         self.player = player
         self.commands = {
-            'quit': self.quit,
+            'attack': self.player.attack,
+            'explore': self._explore,
+            'flee': self._flee,
             'help': self.display_help,
-            'status': self.player.status,
-            'rest': self.player.rest,
-            'explore': self.player.explore,
-            'flee': self.player.flee,
-            'attack': self.player.attack
+            'inventory': self.player.inventory.display,
+            'quit': self.quit,
+            'rest': self._rest,
+            'status': self.player.status
         }
 
     def display_help(self):
@@ -58,3 +61,17 @@ class Game:
                         break
                 if not command_found:
                     print("%s does not understand the request, try again" % self.player.name)
+
+    def _explore(self):
+        display(self.player.explore())
+        return ""
+
+    def _flee(self):
+        display(self.player.flee())
+        return ""
+
+    def _rest(self):
+        display(self.player.rest())
+        return ""
+
+

@@ -23,10 +23,10 @@ import random
 class Monster:
     """The monster class"""
 
-    def __init__(self, name: str, attack: int, drop: dict, exp: int, level: int, life_points: int, status: str):
+    def __init__(self, name: str, attack: int, drop_items: dict, exp: int, level: int, life_points: int, status: str):
         self.name = name
         self.attack = attack
-        self.drop = drop
+        self.drop_items = drop_items
         self.exp = exp
         self.level = level
         self.life_points = life_points
@@ -42,7 +42,7 @@ class Monster:
         print(random_entry)
         return Monster(random_entry["name"],
                        int(random_entry["attack"]),
-                       random_entry["drop"],
+                       random_entry["drop_items"],
                        int(random_entry["exp"]),
                        level,
                        int(random_entry["lp"]),
