@@ -20,7 +20,8 @@ import json
 import random
 from random import randint
 
-from Monster import Monster
+from src.vrom.vrpg.Inventory import Inventory
+from src.vrom.vrpg.Monster import Monster
 
 
 class Player:
@@ -35,6 +36,7 @@ class Player:
         self.monster = None
         self.exp = 0
         self.level = 1
+        self.inventory = Inventory(dict())
 
     def status(self):
         print("%s's status: %s" % (self.name, self.state))
@@ -43,56 +45,64 @@ class Player:
         print("%s has %d points of experience" % (self.name, self.exp))
         return ''
 
-    def tired(self):
-        self.health = max(1, self.health - 1)
-        return "%s feels tired." % self.name
-
     def rest(self):
         if self.state != 'normal':
             print("%s can't rest now!" % self.name)
             return self.enemy_attacks()
         else:
             self.health = self.health_max
-            return "%s rests." % self.name
+            return "%s rests until (s)he feels better." % self.name
 
     def flee(self):
         if self.state != 'fight':
-            print("%s performs some shadow boxing. It's exhausting." % self.name)
-            return self.tired()
+            return "There is nothing to fly from"
         else:
-            if randint(1, self.health + 5) > randint(1, self.monster.health):
+            if randint(1, self.health + 5) > randint(1, self.monster.life_points):
                 self.state = 'normal'
                 previous_monster_name = self.monster.name
                 self.monster = None
-                return "%s flees from %s." % (self.name, previous_monster_name)
+                return "%s escapes with honor from %s." % (self.name, previous_monster_name)
             else:
-                print("%s couldn't escape from %s!" % (self.name, self.monster.name))
+                print("%s can not escape from %s!" % (self.name, self.monster.name))
                 return self.enemy_attacks()
 
     def explore(self):
         if self.state != 'normal':
             return "%s is too busy right now!" % self.name
+            # TODO Manage ramdom treasures
         else:
             self.monster = Monster.get_random_from_level(self.level)
-            print("%s is surprised by a %s." % (self.name, self.monster.name))
             if self.monster.status == 'aggressive':
                 self.state = 'fight'
-            return Monster.get_monster_behavior_from_status(self.monster.status, self.monster.name, self.name)
+            return "%s is surprised by a %s. \n %s" % (self.name, self.monster.name,
+                                                       Monster.get_monster_behavior_from_status(self.monster.status,
+                                                                                                self.monster.name,
+                                                                                                self.name))
 
     def attack(self):
         if self.state != 'fight':
-            print("%s performs some shadow boxing. It's exhausting." % self.name)
-            return self.tired()
+            return "There is nothing to attack"
         else:
+            # TODO Manage player life + combat
             self.state = 'normal'
             self.kills += 1
-            self.exp += self.monster.exp
-            return Player.get_player_attack(self.level, self.monster.name, self.name)
-            # TODO Manage player life + combat
-            # if randint(0, self.health) < 10:
-            #     self.health = self.health + 1
-            #     self.health_max = self.health_max + 1
-            #     return "%s feels stronger!" % self.name
+            monster = self.monster
+            self.exp += monster.exp
+            # TODO alternatives for player or monster death
+            while monster.life_points > 0:
+                # TODO manage first round of attack
+                attack = randint(1, self.level + 5)
+                print("%s hits target for %s points." % (self.name, attack))
+                monster.life_points -= attack
+                if monster.life_points > 0:
+                    monster_attack = randint(1, monster.attack)
+                    print("%s hits %s for %s points." % (monster.name, self.name, monster_attack))
+                    # if self.health < 0:
+                    # TODO manage player death
+                    # TODO manage inventory
+                else:
+                    self.inventory.add_to_inventory(self.monster.drop_items)
+            return Player.get_player_attack(self.level, monster.name, self.name)
 
     def enemy_attacks(self):
         if self.state == 'fight':
@@ -102,6 +112,7 @@ class Player:
             self.monster = None
             return "The monster goes away"
 
+    # TODO refactor this method as used in some places
     @staticmethod
     def get_player_attack(level: int, monster_name: str, player_name: str):
         file = open('resources/player_behavior.json')

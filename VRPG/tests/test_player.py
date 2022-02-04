@@ -24,14 +24,16 @@ from unittest import main as unittest_main
 from src.vrom.vrpg.Player import Player
 
 
-class PlayerTestCase(unittest.TestCase):
+class test_player(unittest.TestCase):
     player = None
     console_output = None
 
-    @classmethod
-    def setUpClass(cls):
-        cls.player = Player("Sam Carter")
-        cls.console_output = io.StringIO()
+    def setUp(self):
+        self.player = Player("Sam Carter")
+        self.console_output = io.StringIO()
+
+    def tearDown(self):
+        self.console_output.close()
 
     def test_should_display_player_status(self):
         with contextlib.redirect_stdout(self.console_output):
@@ -42,15 +44,13 @@ Sam Carter\'s health status: 10/10
 Sam Carter has slaughtered: 0 monsters
 Sam Carter has 0 points of experience"""
         self.assertMultiLineEqual(output, expected_output)
-        self.console_output.close()
 
-    def test_should_display_player_tired(self):
+    def test_should_display_player_empty_inventory(self):
         with contextlib.redirect_stdout(self.console_output):
-            self.player.tired()
+            self.player.inventory.display()
             output = self.console_output.getvalue().strip()
-        expected_output = """Boo"""
+        expected_output = """The inventory is empty"""
         self.assertMultiLineEqual(output, expected_output)
-        self.console_output.close()
 
 
 if __name__ == '__main__':
